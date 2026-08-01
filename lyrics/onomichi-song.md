@@ -11,6 +11,7 @@ CAMOUFLAGE Official Theme
 [Verse]
 
 遊んで　はしゃいで　飲もう
+コーヒーのフリして　街に溶ける
 食ってみな　飛ぶぞ
 食ってみな　飛ぶぞ
 
