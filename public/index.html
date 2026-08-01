@@ -59,6 +59,23 @@
     margin: 1.4rem 0 0.3rem;
   }
   .lyrics .tag:first-child { margin-top: 0; }
+  .lyrics-toggle {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: #1c1a16;
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+  .lyrics-toggle:active { opacity: 0.85; }
+  .lyrics-card { display: none; }
+  .lyrics-card.is-open { display: block; }
   footer {
     color: var(--muted);
     font-size: 0.85rem;
@@ -79,7 +96,9 @@
     </audio>
   </div>
 
-  <div class="card lyrics"><span class="tag">[Chorus]</span>しゅうまつ　だんがん　おのみち　りょこう〜
+  <button type="button" class="lyrics-toggle" id="lyricsToggle" aria-expanded="false" aria-controls="lyricsCard">歌詞を表示</button>
+
+  <div class="card lyrics lyrics-card" id="lyricsCard"><span class="tag">[Chorus]</span>しゅうまつ　だんがん　おのみち　りょこう〜
 しゅうまつ　だんがん　おのみち　りょこう〜
 しゅうまつ　だんがん　おのみち　りょこう〜
 しゅうまつ　だんがん　おのみち　りょこう〜
@@ -107,5 +126,14 @@
 
   <footer>週末弾丸尾道旅行 Song Project</footer>
 </main>
+<script>
+  var toggle = document.getElementById('lyricsToggle');
+  var card = document.getElementById('lyricsCard');
+  toggle.addEventListener('click', function () {
+    var isOpen = card.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', isOpen);
+    toggle.textContent = isOpen ? '歌詞を隠す' : '歌詞を表示';
+  });
+</script>
 </body>
 </html>
