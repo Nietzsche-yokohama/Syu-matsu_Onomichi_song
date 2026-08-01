@@ -11,24 +11,34 @@
 
 ## 歌詞
 
-- [`lyrics/onomichi-song.md`](lyrics/onomichi-song.md) — 作戦を踏まえて修正した最新版
-- [`lyrics/onomichi-song.original.md`](lyrics/onomichi-song.original.md) — 修正前のオリジナル(参照用)
+- [`lyrics/onomichi-song.md`](lyrics/onomichi-song.md) — 最新版
+- [`lyrics/onomichi-song.original.md`](lyrics/onomichi-song.original.md) — 最初のオリジナル(参照用)
 
-修正版では、繰り返しの「週末弾丸尾道旅行〜」パートを作戦のストーリーに合わせて章ごとに変化させた:
+コーラス(`[Chorus]` `[Chorus 2]` `[Solo]` `[Chorus 3]`)の連呼「週末弾丸尾道旅行〜」は変更しない前提。
+発音をSuno向けに調整し `しゅうまつ　だんがん　おのみち　りょこう〜` (ひらがな・単語区切り)にしている。
 
-1. `[Chorus]` コーヒーのフリしてウイスキー〜 — カモフラージュの手口
-2. `[Chorus 2]` 蓋つきカップは　カモフラージュ〜 — 正体の種明かし
-3. `[Solo]` 尾道坂道　千鳥足〜 — 酒飲み散策の実況
-4. `[Chorus 3]` 博多の魂　広島篇〜 — 前回(博多)からの再演を宣言
+`[Verse]`には作戦のカモフラージュを反映した1行を追加:
 
-`[Verse]` `[Pre-chorus]` `[Build-up]` は指示通り未変更。
+```
+遊んで　はしゃいで　飲もう
+コーヒーのフリして　街に溶ける
+食ってみな　飛ぶぞ
+飲んでみな　飛ぶぞ
+```
 
-## Next steps
+## Suno での作曲
 
-歌詞が固まったら、以下は別タスクとして進める:
+Sunoへの指示の出し方(サビから始める・発音・早口フロウ・ベース曲のリズム合わせ等)は
+[`suno-guide.md`](suno-guide.md) を参照。
 
-1. AI作曲サービス(Suno / Udio 等)でこの歌詞から楽曲を生成
-2. 生成した音源をこのリポジトリに配置
-3. Cloudflare Pages/Workers で音源を配信する静的サイトを構築・デプロイ
+## 配信
 
-音源生成はこのセッションのツールでは実行できないため、音源ができた時点で改めて依頼してほしい。
+`public/` 配下がCloudflareへの配信対象。
+
+- `public/index.html` — プレイヤー付きの配信ページ(音源再生+歌詞表示)
+- `public/audio/onomichi-song.mp3` — Sunoで生成した音源
+
+`wrangler.jsonc` でWorker名(`syu-matsu-onomichi-song`)と配信対象ディレクトリ(`public`)を固定している。
+GitHub連携でこのブランチにpushすると自動デプロイされる。
+
+デプロイURL: `https://syu-matsu-onomichi-song.<アカウント名>.workers.dev`
