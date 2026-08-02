@@ -76,6 +76,30 @@
   .lyrics-toggle:active { opacity: 0.85; }
   .lyrics-card { display: none; }
   .lyrics-card.is-open { display: block; }
+  .player-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+  }
+  .repeat-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+  .repeat-toggle.is-active {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .repeat-toggle:active { opacity: 0.85; }
   footer {
     color: var(--muted);
     font-size: 0.85rem;
@@ -90,10 +114,13 @@
   <p class="subtitle">CAMOUFLAGE Official Theme</p>
 
   <div class="card">
-    <audio controls preload="metadata" src="audio/onomichi-song.mp3">
+    <audio controls preload="metadata" id="player" src="audio/onomichi-song.mp3">
       お使いのブラウザはaudio要素に対応していません。
       <a href="audio/onomichi-song.mp3">音源をダウンロード</a>
     </audio>
+    <div class="player-controls">
+      <button type="button" class="repeat-toggle" id="repeatToggle" aria-pressed="false">🔁 リピート: OFF</button>
+    </div>
   </div>
 
   <button type="button" class="lyrics-toggle" id="lyricsToggle" aria-expanded="false" aria-controls="lyricsCard">歌詞を表示</button>
@@ -133,6 +160,25 @@
     var isOpen = card.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', isOpen);
     toggle.textContent = isOpen ? '歌詞を隠す' : '歌詞を表示';
+  });
+
+  var player = document.getElementById('player');
+  var repeatToggle = document.getElementById('repeatToggle');
+  var REPEAT_KEY = 'onomichi-song-repeat';
+
+  function applyRepeat(isRepeat) {
+    player.loop = isRepeat;
+    repeatToggle.classList.toggle('is-active', isRepeat);
+    repeatToggle.setAttribute('aria-pressed', isRepeat);
+    repeatToggle.textContent = isRepeat ? '🔁 リピート: ON' : '🔁 リピート: OFF';
+  }
+
+  applyRepeat(localStorage.getItem(REPEAT_KEY) === 'on');
+
+  repeatToggle.addEventListener('click', function () {
+    var isRepeat = !player.loop;
+    applyRepeat(isRepeat);
+    localStorage.setItem(REPEAT_KEY, isRepeat ? 'on' : 'off');
   });
 </script>
 </body>
